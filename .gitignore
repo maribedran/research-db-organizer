@@ -1,0 +1,16 @@
+*.pyc
+*.sql
+*.sqlite3
+.env
+.Python
+/django.log
+bin/
+build/
+include/
+lib/
+local/
+man/
+media/
+share/
+public/
+project/.noseids
