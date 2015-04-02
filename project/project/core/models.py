@@ -1,17 +1,53 @@
+#coding: utf-8
 from django.db import models
 
 class Publicacao(models.Model):
     titulo = models.CharField(max_length=200)
 
-    contribuidores_individuais = models.OneToMany(to=Pessoa)
-    contribuidores_coletivos = models.OneToMany(to=Entidade)
+    def __str__(self):
+        return self.titulo
 
 
 class Referencia(models.Model):
     titulo = models.CharField(max_length=200)
 
-    pessoas_citadas = models.OneToMany(to=Pessoa)
-    entidades_citadas = models.OneToMany(to=Entidade)
+    def __str__(self):
+        return self.titulo
+
+
+class Pessoa(models.Model):
+    nome = models.CharField(max_length=200)
+    nascimento = models.DateField()
+    morte = models.DateField()
+    nacionalidade = models.CharField(max_length=30)
+    formacao = models.CharField(max_length=100)
+    ocupacao = models.CharField(max_length=100)
+
+    observacoes = models.CharField(max_length=1000)
+
+    #Publicacao
+    publicacoes = models.ManyToManyField(to=Publicacao,
+                                    related_name="contribuidores_individuais",
+                                    null=True,
+                                    blank=True)
+
+    #Referencia
+    referencias = models.ManyToManyField(to=Referencia,
+                                    related_name="pessoas_citadas",
+                                    null=True,
+                                    blank=True)
+
+
+    # moradia
+    # empresas relacionadas
+    # tipo ???
+
+    def __str__(self):
+        return self.nome
+
+    class Meta:
+        ordering = ('nome',)
+
 
 class Entidade(models.Model):
     nome = models.CharField(max_length=200)
@@ -28,19 +64,20 @@ class Entidade(models.Model):
     observacoes = models.CharField(max_length=1000)
 
     #Publicacao
-    publicacoes = models.ForeignKey(to=Publicacao,
+    publicacoes = models.ManyToManyField(to=Publicacao,
                                     related_name="contribuidores_coletivos",
                                     null=True,
                                     blank=True)
 
     #Referencia
-    referencias = models.ForeignKey(to=Referencia,
+    referencias = models.ManyToManyField(to=Referencia,
                                     related_name="entidades_citadas",
                                     null=True,
                                     blank=True)
 
     #Pessoa
-    diretores = models.OneToMany(to=Pessoa)
+    diretores = models.ManyToManyField(to=Pessoa,
+                                  related_name="cargo_de_direcao")
 
     def __str__(self):
         return self.nome
@@ -51,75 +88,26 @@ class Entidade(models.Model):
 
 class Estatal(Entidade):
 
-    funcionarios_publicos = models.OneToMany(to=Pessoa)
+    funcionarios_publicos = models.ManyToManyField(to=Pessoa,
+                                              related_name="cargo_publico")
 
     # entidades relaiconadas
 
 
 class EntidadeEmpresarial(Entidade):
 
-    membros = models.OneToMany(to=Pessoa)
+    membros = models.ManyToManyField(to=Pessoa,
+                                related_name="entidade_empresarial")
 
     # poder publico
 
 
 class AssociacaoDeFavela(Entidade):
 
-    associados = models.OneToMany(to=Pessoa)
+    associados = models.ManyToManyField(to=Pessoa,
+                                   related_name="membro_de_associacao")
 
     # outras associacoes
     # entidades
 
 
-class Pessoa(models.Model):
-    nome = models.CharField(max_length=200)
-    nascimento = models.DateField()
-    morte = models.DateField()
-    nacionalidade = models.CharField(max_length=30)
-    formação = models.CharField(max_length=100)
-    ocupação = models.CharField(max_length=100)
-
-    observacoes = models.CharField(max_length=1000)
-
-    #Publicacao
-    publicacoes = models.ForeignKey(to=Publicacao,
-                                    related_name="contribuidores_individuais",
-                                    null=True,
-                                    blank=True)
-
-    #Referencia
-    referencias = models.ForeignKey(to=Referencia,
-                                    related_name="pessoas_citadas",
-                                    null=True,
-                                    blank=True)
-
-    #Entidade
-    cargo_de_direcao = models.ForeignKey(to=Entidade,
-                                         related_name="diretores",
-                                         null=True,
-                                         blank=True)
-
-    cargos_publicos = models.ForeignKey(to=Estatal,
-                                        related_name="funcionarios_publicos",
-                                        null=True,
-                                        blank=True)
-
-    entidades_empresariais = models.ForeignKey(to=EntidadeEmpresarial,
-                                               related_name="membros",
-                                               null=True,
-                                               blank=True)
-
-    associacoes = models.ForeignKey(to=Associacao,
-                                    related_name="associados",
-                                    null=True,
-                                    blank=True)
-
-    # moradia
-    # empresas relacionadas
-    # tipo ???
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        ordering = ('nome',)
