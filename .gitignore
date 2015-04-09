@@ -1,5 +1,6 @@
 *.pyc
 *.sql
+*.swp
 *.sqlite3
 .env
 .Python
