@@ -15,6 +15,44 @@ class Referencia(models.Model):
         return self.titulo
 
 
+class Pessoa(models.Model):
+    nome = models.CharField(max_length=200)
+    nascimento = models.DateField(null=True, blank=True)
+    morte = models.DateField(null=True, blank=True)
+    nacionalidade = models.CharField(max_length=30, null=True, blank=True)
+    moradia = models.CharField(max_length=100, null=True, blank=True)
+    formacao = models.CharField(max_length=100, null=True, blank=True)
+    ocupacao = models.CharField(max_length=100, null=True, blank=True)
+
+    observacoes = models.CharField(max_length=1000, null=True, blank=True)
+
+    #Publicacao
+    publicacoes = models.ManyToManyField(to=Publicacao,
+                                    related_name="contribuidores_individuais",
+                                    null=True,
+                                    blank=True)
+
+    #Referencia
+    referencias = models.ManyToManyField(to=Referencia,
+                                    related_name="pessoas_citadas",
+                                    null=True,
+                                    blank=True)
+
+
+    def __unicode__(self):
+        return self.nome
+
+
+class MoradorDeFavela(Pessoa):
+    class Meta:
+        proxy = True
+
+
+class Empresario(Pessoa):
+    class Meta:
+        proxy = True
+
+
 class Entidade(models.Model):
     nome = models.CharField(max_length=200)
     fundacao = models.DateField(null=True, blank=True)
@@ -41,81 +79,68 @@ class Entidade(models.Model):
                                     null=True,
                                     blank=True)
 
+    #Pessoa
+    diretores = models.ManyToManyField(Pessoa, through="CargoDeDirecao")
+    funcionarios_publicos = models.ManyToManyField(Pessoa,
+                                        through="FuncionalismoPublico",
+                                        related_name="funcionalismo_publico")
+    empresarios_membros = models.ManyToManyField(Empresario,
+                                        through="MembroEntidadeEmpresarial",
+                                        related_name="membro_entidade")
+    morador_associado = models.ManyToManyField(MoradorDeFavela,
+                                        through="MoradorAssociado",
+                                        related_name="associacao")
+
 
     def __unicode__(self):
         return self.nome
 
 
 class Estatal(Entidade):
-
-    pass
-
-    # entidades relaiconadas
+    class Meta:
+        proxy = True
 
 
 class EntidadeEmpresarial(Entidade):
-
-    pass
-
-    # poder publico
+    class Meta:
+        proxy = True
 
 
 class AssociacaoDeFavela(Entidade):
-
-    pass
-
-    # outras associacoes
-    # entidades
+    class Meta:
+        proxy = True
 
 
-class Pessoa(models.Model):
-    nome = models.CharField(max_length=200)
-    nascimento = models.DateField(null=True, blank=True)
-    morte = models.DateField(null=True, blank=True)
-    nacionalidade = models.CharField(max_length=30, null=True, blank=True)
-    moradia = models.CharField(max_length=100, null=True, blank=True)
-    formacao = models.CharField(max_length=100, null=True, blank=True)
-    ocupacao = models.CharField(max_length=100, null=True, blank=True)
+class CargoDeDirecao(models.Model):
+    pessoa = models.ForeignKey(Pessoa)
+    entidade = models.ForeignKey(Entidade)
 
-    observacoes = models.CharField(max_length=1000, null=True, blank=True)
-
-    #Publicacao
-    publicacoes = models.ManyToManyField(to=Publicacao,
-                                    related_name="contribuidores_individuais",
-                                    null=True,
-                                    blank=True)
-
-    #Referencia
-    referencias = models.ManyToManyField(to=Referencia,
-                                    related_name="pessoas_citadas",
-                                    null=True,
-                                    blank=True)
-
-    #Entidade
-    cargo_de_direcao = models.ManyToManyField(to=Entidade,
-                                              related_name="diretores",
-                                              null=True,
-                                              blank=True)
-
-    cargo_publico = models.ManyToManyField(to=Estatal,
-                                           related_name="funcionarios_publicos",
-                                           null=True,
-                                           blank=True)
-
-    def __unicode__(self):
-        return self.nome
+    data_inicio = models.DateField(null=True, blank=True)
+    data_fim = models.DateField(null=True, blank=True)
 
 
-class MoradorDeFavela(Pessoa):
-    associacao_de_favela = models.ManyToManyField(to=AssociacaoDeFavela,
-                                                  related_name="assciados",
-                                                  null=True,
-                                                  blank=True)
+class FuncionalismoPublico(models.Model):
+    pessoa = models.ForeignKey(Pessoa)
+    entidade = models.ForeignKey(Entidade)
+
+    data_inicio = models.DateField(null=True, blank=True)
+    data_fim = models.DateField(null=True, blank=True)
 
 
-class Empresario(Pessoa):
-    entidade_empresarial = models.ManyToManyField(to=EntidadeEmpresarial,
-                                                  related_name="membros",
-                                                  null=True,
-                                                  blank=True)
+class MembroEntidadeEmpresarial(models.Model):
+    pessoa = models.ForeignKey(Empresario)
+    entidade = models.ForeignKey(Entidade)
+
+    data_inicio = models.DateField(null=True, blank=True)
+    data_fim = models.DateField(null=True, blank=True)
+
+
+
+class MoradorAssociado(models.Model):
+    pessoa = models.ForeignKey(MoradorDeFavela)
+    entidade = models.ForeignKey(Entidade)
+
+    data_inicio = models.DateField(null=True, blank=True)
+    data_fim = models.DateField(null=True, blank=True)
+
 
