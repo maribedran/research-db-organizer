@@ -4,6 +4,7 @@ from models import (Publicacao,
                     Pessoa,
                     MoradorDeFavela,
                     Empresario,
+                    Entidade,
                     EntidadeEmpresarial,
                     Estatal,
                     AssociacaoDeFavela)
@@ -19,37 +20,48 @@ class ReferenciaAdmin(admin.ModelAdmin):
 
 
 class FuncionalismoPublicoInline(admin.TabularInline):
-    model = Pessoa.cargo_publico.through
+    model = Entidade.funcionarios_publicos.through
 
 
 class MembroDeAssociacaoInline(admin.TabularInline):
-    model = MoradorDeFavela.associacao_de_favela.through
+    model = Entidade.morador_associado.through
 
 
 class MembroDeEntidadeInline(admin.TabularInline):
-    model = Empresario.entidade_empresarial.through
+    model = Entidade.empresarios_membros.through
 
 
 @admin.register(MoradorDeFavela)
 class MoradorDeFavelaAdmin(admin.ModelAdmin):
+    fields = (('nome', 'nascimento', 'morte', 'nacionalidade'),
+              ('moradia', 'formacao', 'ocupacao', 'observacoes'),
+              ('publicacoes', 'referencias'),
+            )
     inlines = [
         FuncionalismoPublicoInline,
         MembroDeAssociacaoInline,
     ]
-    exclude = ('cargo_publico', 'associacao_de_favela')
 
 
 @admin.register(Empresario)
 class EmpresarioAdmin(admin.ModelAdmin):
+    fields = (('nome', 'nascimento', 'morte', 'nacionalidade'),
+              ('moradia', 'formacao', 'ocupacao', 'observacoes'),
+              ('publicacoes', 'referencias'),
+            )
     inlines = [
         FuncionalismoPublicoInline,
         MembroDeEntidadeInline,
     ]
-    exclude = ('cargo_publico', 'entidade_empresarial')
 
 
 @admin.register(EntidadeEmpresarial)
 class EntidadeEmpresarialAdmin(admin.ModelAdmin):
+    fields = (('nome', 'fundacao', 'encerramento', 'fundador'),
+              ('objetivos', 'carater', 'financiamento', 'acoes'),
+              ('observacoes'),
+              ('publicacoes', 'referencias'),
+            )
     inlines = [
         MembroDeEntidadeInline,
     ]
@@ -57,6 +69,11 @@ class EntidadeEmpresarialAdmin(admin.ModelAdmin):
 
 @admin.register(Estatal)
 class EstatalAdmin(admin.ModelAdmin):
+    fields = (('nome', 'fundacao', 'encerramento', 'fundador'),
+              ('objetivos', 'carater', 'financiamento', 'acoes'),
+              ('observacoes'),
+              ('publicacoes', 'referencias'),
+            )
     inlines = [
         FuncionalismoPublicoInline,
     ]
@@ -64,6 +81,11 @@ class EstatalAdmin(admin.ModelAdmin):
 
 @admin.register(AssociacaoDeFavela)
 class AssociacaoDeFavelaAdmin(admin.ModelAdmin):
+    fields = (('nome', 'fundacao', 'encerramento', 'fundador'),
+              ('objetivos', 'carater', 'financiamento', 'acoes'),
+              ('observacoes'),
+              ('publicacoes', 'referencias'),
+            )
     inlines = [
         MembroDeAssociacaoInline,
     ]
