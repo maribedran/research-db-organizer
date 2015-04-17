@@ -44,18 +44,24 @@ class Pessoa(models.Model):
                                    verbose_name=u"observações")
 
     #Publicacao
-    publicacoes = models.ManyToManyField(to=Publicacao,
-                                    related_name="contribuidores_individuais",
-                                    null=True,
-                                    blank=True,
-                                    verbose_name=u"publicações")
+    publicacoes = models.ManyToManyField(
+        to=Publicacao,
+        through="PessoaPublicacao",
+        related_name="contribuidores_individuais",
+        null=True,
+        blank=True,
+        verbose_name=u"publicações"
+    )
 
     #Referencia
-    referencias = models.ManyToManyField(to=Referencia,
-                                    related_name="pessoas_citadas",
-                                    null=True,
-                                    blank=True,
-                                    verbose_name=u"referências")
+    referencias = models.ManyToManyField(
+        to=Referencia,
+        through="PessoaReferencia",
+        related_name="pessoas_citadas",
+        null=True,
+        blank=True,
+        verbose_name=u"referências"
+    )
 
 
     def __unicode__(self):
@@ -73,6 +79,11 @@ class Empresario(Pessoa):
     class Meta:
         verbose_name = u"Empresário"
         verbose_name_plural = u"Empresários"
+
+
+class Burocrata(Pessoa):
+
+    pass
 
 
 class Entidade(models.Model):
@@ -101,14 +112,18 @@ class Entidade(models.Model):
                                    verbose_name=u"observações")
 
     #Publicacao
-    publicacoes = models.ManyToManyField(to=Publicacao,
-                                    related_name="contribuidores_coletivos",
-                                    null=True,
-                                    blank=True,
-                                    verbose_name=u"publicações")
+    publicacoes = models.ManyToManyField(
+        to=Publicacao,
+        through="EntidadePublicacao",
+        related_name="contribuidores_coletivos",
+        null=True,
+        blank=True,
+        verbose_name=u"publicações"
+    )
 
     #Referencia
     referencias = models.ManyToManyField(to=Referencia,
+        through="EntidadeReferencia",
         related_name="entidades_citadas",
         null=True,
         blank=True,
@@ -244,4 +259,37 @@ class RelacaoEntidadeAssociacao(models.Model):
 
     data_inicio = models.DateField(null=True, blank=True)
     data_fim = models.DateField(null=True, blank=True)
+
+
+class PessoaPublicacao(models.Model):
+    pessoa = models.ForeignKey(Pessoa)
+    publicacao = models.ForeignKey(Publicacao)
+
+    pagina = models.CharField(max_length=100)
+    observacoes = models.CharField(max_length=200)
+
+
+class PessoaReferencia(models.Model):
+    pessoa = models.ForeignKey(Pessoa)
+    referencia = models.ForeignKey(Referencia)
+
+    pagina = models.CharField(max_length=100)
+    observacoes = models.CharField(max_length=200)
+
+
+class EntidadePublicacao(models.Model):
+    entidade = models.ForeignKey(Entidade)
+    publicacao = models.ForeignKey(Publicacao)
+
+    pagina = models.CharField(max_length=100)
+    observacoes = models.CharField(max_length=200)
+
+
+class EntidadeReferencia(models.Model):
+    entidade = models.ForeignKey(Entidade)
+    referencia = models.ForeignKey(Referencia)
+
+    pagina = models.CharField(max_length=100)
+    observacoes = models.CharField(max_length=200)
+
 

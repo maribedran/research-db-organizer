@@ -4,6 +4,7 @@ from models import (Publicacao,
                     Pessoa,
                     MoradorDeFavela,
                     Empresario,
+                    Burocrata,
                     Entidade,
                     EntidadeEmpresarial,
                     Estatal,
@@ -47,20 +48,36 @@ class RelacaoEntidadeAssociacaoInline(admin.TabularInline):
     model = EntidadeEmpresarial.associacoes_de_favela.through
 
 
+class PessoaPublicacaoInline(admin.TabularInline):
+    model = Pessoa.publicacoes.through
+
+
+class PessoaReferenciaInline(admin.TabularInline):
+    model = Pessoa.referencias.through
+
+
+class EntidadePublicacaoInline(admin.TabularInline):
+    model = Entidade.publicacoes.through
+
+
+class EntidadeReferenciaInline(admin.TabularInline):
+    model = Entidade.referencias.through
+
+
 @admin.register(MoradorDeFavela)
 class MoradorDeFavelaAdmin(admin.ModelAdmin):
     fields = (('nome', 'nascimento', 'morte', 'nacionalidade'),
               ('moradia', 'formacao', 'ocupacao', 'observacoes'),
-              ('publicacoes', 'referencias'),
             )
     inlines = [
         FuncionalismoPublicoInline,
         MembroDeAssociacaoInline,
         DirecaoInline,
+        PessoaPublicacaoInline,
+        PessoaReferenciaInline,
     ]
     list_filter = ('nome', 'nascimento', 'morte', 'nacionalidade',
-                   'moradia', 'formacao', 'ocupacao', 'observacoes',
-                   'publicacoes', 'referencias')
+        'moradia', 'formacao', 'ocupacao', 'observacoes',)
     ordering = ('nome', 'nascimento')
 
 
@@ -68,16 +85,31 @@ class MoradorDeFavelaAdmin(admin.ModelAdmin):
 class EmpresarioAdmin(admin.ModelAdmin):
     fields = (('nome', 'nascimento', 'morte', 'nacionalidade'),
               ('moradia', 'formacao', 'ocupacao', 'observacoes'),
-              ('publicacoes', 'referencias'),
             )
     inlines = [
         FuncionalismoPublicoInline,
         MembroDeEntidadeInline,
         DirecaoInline,
+        PessoaPublicacaoInline,
+        PessoaReferenciaInline,
     ]
     list_filter = ('nome', 'nascimento', 'morte', 'nacionalidade',
-                   'moradia', 'formacao', 'ocupacao', 'observacoes',
-                   'publicacoes', 'referencias')
+                   'moradia', 'formacao', 'ocupacao', 'observacoes',)
+
+
+@admin.register(Burocrata)
+class BurocrataAdmin(admin.ModelAdmin):
+    fields = (('nome', 'nascimento', 'morte', 'nacionalidade'),
+              ('moradia', 'formacao', 'ocupacao', 'observacoes'),
+            )
+    inlines = [
+        FuncionalismoPublicoInline,
+        DirecaoInline,
+        PessoaPublicacaoInline,
+        PessoaReferenciaInline,
+    ]
+    list_filter = ('nome', 'nascimento', 'morte', 'nacionalidade',
+                   'moradia', 'formacao', 'ocupacao', 'observacoes',)
 
 
 @admin.register(EntidadeEmpresarial)
@@ -85,18 +117,18 @@ class EntidadeEmpresarialAdmin(admin.ModelAdmin):
     fields = (('nome', 'fundacao', 'encerramento', 'fundador'),
               ('objetivos', 'carater', 'financiamento', 'acoes'),
               ('observacoes'),
-              ('publicacoes', 'referencias'),
             )
     inlines = [
         MembroDeEntidadeInline,
         DirecaoInline,
         RelacaoEstadoBurguesiaInline,
         RelacaoEntidadeAssociacaoInline,
+        EntidadePublicacaoInline,
+        EntidadeReferenciaInline,
     ]
     list_filter = ('nome', 'fundacao', 'encerramento', 'fundador',
                    'objetivos', 'carater', 'financiamento', 'acoes',
-                   'observacoes', 'publicacoes', 'referencias',
-    )
+                   'observacoes',)
 
 
 @admin.register(Estatal)
@@ -104,18 +136,18 @@ class EstatalAdmin(admin.ModelAdmin):
     fields = (('nome', 'fundacao', 'encerramento', 'fundador'),
               ('objetivos', 'carater', 'financiamento', 'acoes'),
               ('observacoes'),
-              ('publicacoes', 'referencias'),
             )
     inlines = [
         FuncionalismoPublicoInline,
         DirecaoInline,
         RelacaoEstadoMovimentoSocialInline,
         RelacaoEstadoBurguesiaInline,
+        EntidadePublicacaoInline,
+        EntidadeReferenciaInline,
     ]
     list_filter = ('nome', 'fundacao', 'encerramento', 'fundador',
                    'objetivos', 'carater', 'financiamento', 'acoes',
-                   'observacoes', 'publicacoes', 'referencias',
-    )
+                   'observacoes',)
 
 
 @admin.register(AssociacaoDeFavela)
@@ -123,17 +155,17 @@ class AssociacaoDeFavelaAdmin(admin.ModelAdmin):
     fields = (('nome', 'fundacao', 'encerramento', 'fundador'),
               ('objetivos', 'carater', 'financiamento', 'acoes'),
               ('observacoes'),
-              ('publicacoes', 'referencias'),
             )
     inlines = [
         MembroDeAssociacaoInline,
         DirecaoInline,
         RelacaoEstadoMovimentoSocialInline,
         RelacaoEntidadeAssociacaoInline,
+        EntidadePublicacaoInline,
+        EntidadeReferenciaInline,
     ]
     list_filter = ('nome', 'fundacao', 'encerramento', 'fundador',
                    'objetivos', 'carater', 'financiamento', 'acoes',
-                   'observacoes', 'publicacoes', 'referencias',
-    )
+                   'observacoes',)
 
 
