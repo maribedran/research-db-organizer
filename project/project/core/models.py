@@ -317,7 +317,13 @@ class PessoaPublicacao(models.Model):
     publicacao = models.ForeignKey(Publicacao)
 
     pagina = models.CharField(max_length=100)
-    observacoes = models.CharField(max_length=200)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
+    class Meta:
+        verbose_name_plural = "Publicações"
 
 
 class PessoaReferencia(models.Model):
@@ -325,7 +331,13 @@ class PessoaReferencia(models.Model):
     referencia = models.ForeignKey(Referencia)
 
     pagina = models.CharField(max_length=100)
-    observacoes = models.CharField(max_length=200)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
+    class Meta:
+        verbose_name_plural = "Referências"
 
 
 class EntidadePublicacao(models.Model):
@@ -333,7 +345,13 @@ class EntidadePublicacao(models.Model):
     publicacao = models.ForeignKey(Publicacao)
 
     pagina = models.CharField(max_length=100)
-    observacoes = models.CharField(max_length=200)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
+    class Meta:
+        verbose_name_plural = "Publicações"
 
 
 class EntidadeReferencia(models.Model):
@@ -341,6 +359,12 @@ class EntidadeReferencia(models.Model):
     referencia = models.ForeignKey(Referencia)
 
     pagina = models.CharField(max_length=100)
-    observacoes = models.CharField(max_length=200)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
+    class Meta:
+        verbose_name_plural = "Referências"
 
 
