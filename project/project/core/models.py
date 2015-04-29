@@ -35,8 +35,8 @@ class Referencia(models.Model):
 
 class Pessoa(models.Model):
     nome = models.CharField(max_length=200)
-    nascimento = models.DateField(null=True, blank=True)
-    morte = models.DateField(null=True, blank=True)
+    nascimento = models.CharField(max_length=15, null=True, blank=True)
+    morte = models.CharField(max_length=15, null=True, blank=True)
     nacionalidade = models.CharField(max_length=30, null=True, blank=True)
     moradia = models.CharField(max_length=100, null=True, blank=True)
     formacao = models.CharField(max_length=100,
@@ -98,10 +98,13 @@ class Burocrata(Pessoa):
 
 class Entidade(models.Model):
     nome = models.CharField(max_length=200)
-    fundacao = models.DateField(null=True,
+    fundacao = models.CharField(max_length=15,
+                                null=True,
                                 blank=True,
                                 verbose_name=u"fundação")
-    encerramento = models.DateField(null=True, blank=True)
+    encerramento = models.CharField(max_length=15,
+                                    null=True,
+                                    blank=True)
     fundador = models.CharField(max_length=200, null=True, blank=True)
     objetivos = models.CharField(max_length=200, null=True, blank=True)
     carater = models.CharField(max_length=200,
@@ -204,8 +207,13 @@ class CargoDeDirecao(models.Model):
     pessoa = models.ForeignKey(Pessoa)
     entidade = models.ForeignKey(Entidade)
 
-    data_inicio = models.DateField(null=True, blank=True)
-    data_fim = models.DateField(null=True, blank=True)
+    inicio = models.CharField(max_length=15, null=True, blank=True)
+    fim = models.CharField(max_length=15, null=True, blank=True)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
 
     class Meta:
         verbose_name = u"Cargo de direção"
@@ -215,8 +223,13 @@ class FuncionalismoPublico(models.Model):
     pessoa = models.ForeignKey(Pessoa)
     estatal = models.ForeignKey(Estatal)
 
-    data_inicio = models.DateField(null=True, blank=True)
-    data_fim = models.DateField(null=True, blank=True)
+    inicio = models.CharField(max_length=15, null=True, blank=True)
+    fim = models.CharField(max_length=15, null=True, blank=True)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
 
     class Meta:
         verbose_name = u"Funcionalismo público"
@@ -226,8 +239,13 @@ class MembroEntidadeEmpresarial(models.Model):
     empresario = models.ForeignKey(Empresario)
     entidade_empresarial = models.ForeignKey(EntidadeEmpresarial)
 
-    data_inicio = models.DateField(null=True, blank=True)
-    data_fim = models.DateField(null=True, blank=True)
+    inicio = models.CharField(max_length=15, null=True, blank=True)
+    fim = models.CharField(max_length=15, null=True, blank=True)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
 
     class Meta:
         verbose_name = u"Membro de entidade empresarial"
@@ -239,8 +257,13 @@ class MoradorAssociado(models.Model):
     associacao = models.ForeignKey(AssociacaoDeFavela,
             verbose_name=u"associação")
 
-    data_inicio = models.DateField(null=True, blank=True)
-    data_fim = models.DateField(null=True, blank=True)
+    inicio = models.CharField(max_length=15, null=True, blank=True)
+    fim = models.CharField(max_length=15, null=True, blank=True)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
 
     class Meta:
         verbose_name = u"Morador associado"
@@ -251,24 +274,42 @@ class RelacaoEstadoBurguesia(models.Model):
     estatal = models.ForeignKey(Estatal)
     entidades_empresarial = models.ForeignKey(EntidadeEmpresarial)
 
-    data_inicio = models.DateField(null=True, blank=True)
-    data_fim = models.DateField(null=True, blank=True)
+    inicio = models.CharField(max_length=15, null=True, blank=True)
+    fim = models.CharField(max_length=15, null=True, blank=True)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
 
 
 class RelacaoEstadoMovimentoSocial(models.Model):
     estatal = models.ForeignKey(Estatal)
     associacao_favela = models.ForeignKey(AssociacaoDeFavela)
 
-    data_inicio = models.DateField(null=True, blank=True)
-    data_fim = models.DateField(null=True, blank=True)
+    inicio = models.CharField(max_length=15, null=True, blank=True)
+    fim = models.CharField(max_length=15, null=True, blank=True)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
+    class Meta:
+        verbose_name_plural = "Relação entre entidade empresarial e associação de favela"
 
 
 class RelacaoEntidadeAssociacao(models.Model):
     entidade_empresarial = models.ForeignKey(EntidadeEmpresarial)
     associacao_favela = models.ForeignKey(AssociacaoDeFavela)
 
-    data_inicio = models.DateField(null=True, blank=True)
-    data_fim = models.DateField(null=True, blank=True)
+    inicio = models.CharField(max_length=15, null=True, blank=True)
+    fim = models.CharField(max_length=15, null=True, blank=True)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
+    class Meta:
+        verbose_name_plural = "Relação entre entidade empresarial e associação de favela"
 
 
 class PessoaPublicacao(models.Model):
