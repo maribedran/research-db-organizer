@@ -12,12 +12,14 @@ from models import (Publicacao,
 
 @admin.register(Publicacao)
 class PublicacaoAdmin(admin.ModelAdmin):
-    list_filter = ('titulo',)
+
+    list_display = ('titulo',)
 
 
 @admin.register(Referencia)
 class ReferenciaAdmin(admin.ModelAdmin):
-    list_filter = ('titulo',)
+
+    list_display = ('titulo',)
 
 
 class DirecaoInline(admin.TabularInline):
@@ -78,7 +80,7 @@ class MoradorDeFavelaAdmin(admin.ModelAdmin):
     ]
     list_filter = ('nome', 'nascimento', 'morte', 'nacionalidade',
         'moradia', 'formacao', 'ocupacao', 'observacoes',)
-    ordering = ('nome', 'nascimento')
+    list_display = ('nome', 'nascimento', 'morte', )
 
 
 @admin.register(Empresario)
@@ -95,6 +97,7 @@ class EmpresarioAdmin(admin.ModelAdmin):
     ]
     list_filter = ('nome', 'nascimento', 'morte', 'nacionalidade',
                    'moradia', 'formacao', 'ocupacao', 'observacoes',)
+    list_display = ('nome', 'nascimento', 'morte', )
 
 
 @admin.register(Burocrata)
@@ -110,6 +113,7 @@ class BurocrataAdmin(admin.ModelAdmin):
     ]
     list_filter = ('nome', 'nascimento', 'morte', 'nacionalidade',
                    'moradia', 'formacao', 'ocupacao', 'observacoes',)
+    list_display = ('nome', 'nascimento', 'morte', )
 
 
 @admin.register(EntidadeEmpresarial)
@@ -129,6 +133,7 @@ class EntidadeEmpresarialAdmin(admin.ModelAdmin):
     list_filter = ('nome', 'fundacao', 'encerramento', 'fundador',
                    'objetivos', 'carater', 'financiamento', 'acoes',
                    'observacoes',)
+    list_display = ('nome', 'fundacao', 'encerramento', )
 
 
 @admin.register(Estatal)
@@ -148,6 +153,7 @@ class EstatalAdmin(admin.ModelAdmin):
     list_filter = ('nome', 'fundacao', 'encerramento', 'fundador',
                    'objetivos', 'carater', 'financiamento', 'acoes',
                    'observacoes',)
+    list_display = ('nome', 'fundacao', 'encerramento', )
 
 
 @admin.register(AssociacaoDeFavela)
@@ -167,5 +173,6 @@ class AssociacaoDeFavelaAdmin(admin.ModelAdmin):
     list_filter = ('nome', 'fundacao', 'encerramento', 'fundador',
                    'objetivos', 'carater', 'financiamento', 'acoes',
                    'observacoes',)
+    list_display = ('nome', 'fundacao', 'encerramento', )
 
 
