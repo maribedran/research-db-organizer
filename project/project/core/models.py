@@ -3,6 +3,11 @@ from django.db import models
 
 class Publicacao(models.Model):
     titulo = models.CharField(max_length=200)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
 
     def __unicode__(self):
         return self.titulo
@@ -14,6 +19,11 @@ class Publicacao(models.Model):
 
 class Referencia(models.Model):
     titulo = models.CharField(max_length=200)
+    observacoes = models.CharField(max_length=1000,
+                                   null=True,
+                                   blank=True,
+                                   verbose_name=u"observações")
+
 
     def __unicode__(self):
         return self.titulo
