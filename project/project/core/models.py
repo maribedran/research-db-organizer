@@ -168,7 +168,6 @@ class EntidadeEmpresarial(Entidade):
     empresarios_membros = models.ManyToManyField(Empresario,
         through="MembroEntidadeEmpresarial",
         related_name="membro_entidade_empresarial",
-        verbose_name=u"empresários membros"
     )
 
     associacoes_de_favela = models.ManyToManyField(AssociacaoDeFavela,
@@ -184,19 +183,16 @@ class Estatal(Entidade):
     funcionarios_publicos = models.ManyToManyField(Pessoa,
         through="FuncionalismoPublico",
         related_name="cargo_publico",
-        verbose_name=u"funcionários públicos"
     )
 
     entidades_empresariais = models.ManyToManyField(EntidadeEmpresarial,
             through="RelacaoEstadoBurguesia",
             related_name="estatais",
-            verbose_name=u"Relação Estado Burguesia"
     )
 
     associacoes_de_favela = models.ManyToManyField(AssociacaoDeFavela,
             through="RelacaoEstadoMovimentoSocial",
             related_name="Estatais",
-            verbose_name=u"Relação Estado Movimentos Sociais"
     )
 
     class Meta:
@@ -216,7 +212,6 @@ class CargoDeDirecao(models.Model):
 
 
     class Meta:
-        verbose_name = u"Cargo de direção"
         verbose_name_plural = u"Cargos de direção"
 
 class FuncionalismoPublico(models.Model):
@@ -232,7 +227,6 @@ class FuncionalismoPublico(models.Model):
 
 
     class Meta:
-        verbose_name = u"Funcionalismo público"
         verbose_name_plural = u"Cargos no funcionalismo público"
 
 class MembroEntidadeEmpresarial(models.Model):
@@ -248,8 +242,7 @@ class MembroEntidadeEmpresarial(models.Model):
 
 
     class Meta:
-        verbose_name = u"Membro de entidade empresarial"
-        verbose_name_plural = u"Membros de entidades empresariais"
+        verbose_name_plural = u"Membro de entidades empresarial"
 
 
 class MoradorAssociado(models.Model):
