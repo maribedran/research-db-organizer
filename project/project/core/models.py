@@ -269,11 +269,14 @@ class RelacaoEstadoBurguesia(models.Model):
 
     inicio = models.CharField(max_length=15, null=True, blank=True)
     fim = models.CharField(max_length=15, null=True, blank=True)
+    tipo_de_vinculo = models.CharField(max_length=100, null=True, blank=True)
     observacoes = models.CharField(max_length=1000,
                                    null=True,
                                    blank=True,
                                    verbose_name=u"observações")
 
+    class Meta:
+        verbose_name_plural = "Relação entre estatal e entidade empresarial"
 
 class RelacaoEstadoMovimentoSocial(models.Model):
     estatal = models.ForeignKey(Estatal)
@@ -281,13 +284,14 @@ class RelacaoEstadoMovimentoSocial(models.Model):
 
     inicio = models.CharField(max_length=15, null=True, blank=True)
     fim = models.CharField(max_length=15, null=True, blank=True)
+    tipo_de_vinculo = models.CharField(max_length=100, null=True, blank=True)
     observacoes = models.CharField(max_length=1000,
                                    null=True,
                                    blank=True,
                                    verbose_name=u"observações")
 
     class Meta:
-        verbose_name_plural = "Relação entre entidade empresarial e associação de favela"
+        verbose_name_plural = "Relação entre estatal e associação de favela"
 
 
 class RelacaoEntidadeAssociacao(models.Model):
@@ -296,6 +300,7 @@ class RelacaoEntidadeAssociacao(models.Model):
 
     inicio = models.CharField(max_length=15, null=True, blank=True)
     fim = models.CharField(max_length=15, null=True, blank=True)
+    tipo_de_vinculo = models.CharField(max_length=100, null=True, blank=True)
     observacoes = models.CharField(max_length=1000,
                                    null=True,
                                    blank=True,
