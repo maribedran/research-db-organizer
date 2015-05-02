@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "- >
+<html>
+  <head>
+    {% load staticfiles %}
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}"/>
+
+
+    {% block title %}
+      <title>Home</title>
+    {% endblock title %}
+  </head>
+  <body>
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <p class="navbar-text">Organizador de pesquisa</p>
+          </div>
+         </div>
+      </nav>
+        {% block content %}
+        {% endblock content %}
+  </body>
+</html>

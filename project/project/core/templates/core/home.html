@@ -1,0 +1,389 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <h1>Moradores de favelas</h1>
+
+  <table class="table table-hover table-condensed table-striped">
+    <tr>
+      <th>Nome</th>
+      <th>Nascimento</th>
+      <th>Morte</th>
+      <th>Moradia</th>
+      <th>Nacionalidade</th>
+      <th>Formação</th>
+      <th>Ocupação</th>
+      <th>Participação em associação</th>
+      <th>Cargo de direção</th>
+      <th>Funcionalismo Público</th>
+      <th>Publicações</th>
+      <th>Referências</th>
+      <th>Observações</th>
+    </tr>
+    {% for f in favelados %}
+    <tr>
+      <td>{{ f.nome }}</td>
+      <td>{{ f.nascimento }}</td>
+      <td>{{ f.morte }}</td>
+      <td>{{ f.nacionalidade }}</td>
+      <td>{{ f.moradia }}</td>
+      <td>{{ f.formacao }}</td>
+      <td>{{ f.ocupacao }}</td>
+      <td>
+        {% for associacao in f.associacao_favela.all %}
+          {{ associacao.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for entidade in f.cargo_de_direcao.all %}
+          {{ entidade.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for estatal in f.cargo_publico.all %}
+          {{ estatal.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for publicacao in f.publicacoes.all %}
+        {{ publicacao.titulo }}
+        {% endfor %}
+      </td>
+      <td>
+        {% for referencia in f.referencias.all %}
+          {{ referencia.titulo }}
+        {% endfor %}
+      </td>
+      <td>{{ f.observacoes }}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+</div>
+
+<div class="jumbotron">
+  <h1>Empresários</h1>
+
+  <table class="table table-hover table-condensed table-striped">
+    <tr>
+      <th>Nome</th>
+      <th>Nascimento</th>
+      <th>Morte</th>
+      <th>Moradia</th>
+      <th>Nacionalidade</th>
+      <th>Formação</th>
+      <th>Ocupação</th>
+      <th>Participação em entidade</th>
+      <th>Cargo de direção</th>
+      <th>Funcionalismo Público</th>
+      <th>Publicações</th>
+      <th>Referências</th>
+      <th>Observações</th>
+    </tr>
+    {% for e in empresarios %}
+    <tr>
+      <td>{{ e.nome }}</td>
+      <td>{{ e.nascimento }}</td>
+      <td>{{ e.morte }}</td>
+      <td>{{ e.nacionalidade }}</td>
+      <td>{{ e.moradia }}</td>
+      <td>{{ e.formacao }}</td>
+      <td>{{ e.ocupacao }}</td>
+      <td>
+        {% for entidade in e.membro_entidade_empresarial.all %}
+          {{ entidade.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for entidade in e.cargo_de_direcao.all %}
+          {{ entidade.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for estatal in e.cargo_publico.all %}
+          {{ estatal.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for publicacao in e.publicacoes.all %}
+        {{ publicacao.titulo }}
+        {% endfor %}
+      </td>
+      <td>
+        {% for referencia in e.referencias.all %}
+          {{ referencia.titulo }}
+        {% endfor %}
+      </td>
+      <td>{{ e.observacoes }}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+</div>
+
+<div class="jumbotron">
+  <h1>Burocratas</h1>
+
+  <table class="table table-hover table-condensed table-striped">
+    <tr>
+      <th>Nome</th>
+      <th>Nascimento</th>
+      <th>Morte</th>
+      <th>Moradia</th>
+      <th>Nacionalidade</th>
+      <th>Formação</th>
+      <th>Ocupação</th>
+      <th>Cargo de direção</th>
+      <th>Funcionalismo Público</th>
+      <th>Publicações</th>
+      <th>Referências</th>
+      <th>Observações</th>
+    </tr>
+    {% for b in burocratas %}
+    <tr>
+      <td>{{ b.nome }}</td>
+      <td>{{ b.nascimento }}</td>
+      <td>{{ b.morte }}</td>
+      <td>{{ b.nacionalidade }}</td>
+      <td>{{ b.moradia }}</td>
+      <td>{{ b.formacao }}</td>
+      <td>{{ b.ocupacao }}</td>
+      <td>
+        {% for entidade in b.cargo_de_direcao.all %}
+          {{ entidade.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for estatal in b.cargo_publico.all %}
+          {{ estatal.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for publicacao in b.publicacoes.all %}
+          {{ publicacao.titulo }}
+        {% endfor %}
+      </td>
+      <td>
+        {% for referencia in b.referencias.all %}
+          {{ referencia.titulo }}
+        {% endfor %}
+      </td>
+      <td>{{ b.observacoes }}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+</div>
+
+<div class="jumbotron">
+  <h1>Associações de favelados</h1>
+
+  <table class="table table-hover table-condensed table-striped">
+    <tr>
+      <th>Nome</th>
+      <th>Fundação</th>
+      <th>Encerramento</th>
+      <th>Fundador</th>
+      <th>Objetivos</th>
+      <th>Caráter</th>
+      <th>Financiamento</th>
+      <th>Ações</th>
+      <th>Grupos representados</th>
+      <th>Moradores associados</th>
+      <th>Diretores</th>
+      <th>Entidades relacionadas</th>
+      <th>Estatais relacionadas</th>
+      <th>Publicações</th>
+      <th>Referências</th>
+      <th>Observações</th>
+    </tr>
+    {% for a in associacoes %}
+    <tr>
+      <td>{{ a.nome }}</td>
+      <td>{{ a.fundacao }}</td>
+      <td>{{ a.encerramento }}</td>
+      <td>{{ a.fundador }}</td>
+      <td>{{ a.objetivos }}</td>
+      <td>{{ a.carater }}</td>
+      <td>{{ a.financiamento }}</td>
+      <td>{{ a.acoes }}</td>
+      <td>{{ a.grupos_representados }}</td>
+      <td>
+        {% for  morador in a.moredores_associados.all %}
+          {{ morador.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for diretor in a.diretores.all %}
+          {{ diretor.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for entidade in a.entidades_empresariais.all %}
+          {{ entidade.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for estatal in a.estatais.all %}
+          {{ estatal.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for publicacao in a.publicacoes.all %}
+          {{ publicacao.titulo }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for referencia in a.referencias.all %}
+          {{ referencia.titulo }},
+        {% endfor %}
+      </td>
+      <td>{{ a.observacoes }}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+</div>
+
+<div class="jumbotron">
+  <h1>Entidades empresariais</h1>
+
+  <table class="table table-hover table-condensed table-striped">
+    <tr>
+      <th>Nome</th>
+      <th>Fundação</th>
+      <th>Encerramento</th>
+      <th>Fundador</th>
+      <th>Objetivos</th>
+      <th>Caráter</th>
+      <th>Financiamento</th>
+      <th>Ações</th>
+      <th>Grupos representados</th>
+      <th>Empresários membros</th>
+      <th>Diretores</th>
+      <th>Associações relacionadas</th>
+      <th>Estatais relacionadas</th>
+      <th>Publicações</th>
+      <th>Referências</th>
+      <th>Observações</th>
+    </tr>
+    {% for e in entidades %}
+    <tr>
+      <td>{{ e.nome }}</td>
+      <td>{{ e.fundacao }}</td>
+      <td>{{ e.encerramento }}</td>
+      <td>{{ e.fundador }}</td>
+      <td>{{ e.objetivos }}</td>
+      <td>{{ e.carater }}</td>
+      <td>{{ e.financiamento }}</td>
+      <td>{{ e.acoes }}</td>
+      <td>{{ e.grupos_representados }}</td>
+      <td>
+        {% for  empresario in e.empresarios_membros.all %}
+          {{ empresario.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for diretor in e.diretores.all %}
+          {{ diretor.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for associacao in e.associacoes_de_favela.all %}
+          {{ entidade.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for estatal in e.estatais.all %}
+          {{ estatal.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for publicacao in e.publicacoes.all %}
+          {{ publicacao.titulo }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for referencia in e.referencias.all %}
+          {{ referencia.titulo }},
+        {% endfor %}
+      </td>
+      <td>{{ e.observacoes }}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+</div>
+
+<div class="jumbotron">
+  <h1>Estatais</h1>
+
+  <table class="table table-hover table-condensed table-striped">
+    <tr>
+      <th>Nome</th>
+      <th>Fundação</th>
+      <th>Encerramento</th>
+      <th>Fundador</th>
+      <th>Objetivos</th>
+      <th>Caráter</th>
+      <th>Financiamento</th>
+      <th>Ações</th>
+      <th>Grupos representados</th>
+      <th>Funcionários</th>
+      <th>Diretores</th>
+      <th>Associações relacionadas</th>
+      <th>Entidades relacionadas</th>
+      <th>Publicações</th>
+      <th>Referências</th>
+      <th>Observações</th>
+    </tr>
+    {% for e in estatais %}
+    <tr>
+      <td>{{ e.nome }}</td>
+      <td>{{ e.fundacao }}</td>
+      <td>{{ e.encerramento }}</td>
+      <td>{{ e.fundador }}</td>
+      <td>{{ e.objetivos }}</td>
+      <td>{{ e.carater }}</td>
+      <td>{{ e.financiamento }}</td>
+      <td>{{ e.acoes }}</td>
+      <td>{{ e.grupos_representados }}</td>
+      <td>
+        {% for funcionario in e.funcionarios_publicos.all %}
+          {{ funcionario.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for diretor in e.diretores.all %}
+          {{ diretor.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for associacao in e.associacoes_de_favela.all %}
+          {{ associacao.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for estatal in e.estatais.all %}
+          {{ estatal.nome }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for publicacao in e.publicacoes.all %}
+          {{ publicacao.titulo }},
+        {% endfor %}
+      </td>
+      <td>
+        {% for referencia in e.referencias.all %}
+          {{ referencia.titulo }},
+        {% endfor %}
+      </td>
+      <td>{{ e.observacoes }}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+</div>
+
+{% endblock content %}
