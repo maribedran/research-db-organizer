@@ -145,7 +145,8 @@ class Entidade(models.Model):
 
     #Pessoa
     diretores = models.ManyToManyField(Pessoa,
-        through="CargoDeDirecao"
+        through="CargoDeDirecao",
+        related_name="cargo_de_direcao"
     )
 
 
@@ -192,7 +193,7 @@ class Estatal(Entidade):
 
     associacoes_de_favela = models.ManyToManyField(AssociacaoDeFavela,
             through="RelacaoEstadoMovimentoSocial",
-            related_name="Estatais",
+            related_name="estatais",
     )
 
     class Meta:
@@ -314,7 +315,7 @@ class PessoaPublicacao(models.Model):
     pessoa = models.ForeignKey(Pessoa)
     publicacao = models.ForeignKey(Publicacao)
 
-    pagina = models.CharField(max_length=100)
+    pagina = models.CharField(max_length=100, null=True, blank=True)
     observacoes = models.CharField(max_length=1000,
                                    null=True,
                                    blank=True,
@@ -328,7 +329,7 @@ class PessoaReferencia(models.Model):
     pessoa = models.ForeignKey(Pessoa)
     referencia = models.ForeignKey(Referencia)
 
-    pagina = models.CharField(max_length=100)
+    pagina = models.CharField(max_length=100, null=True, blank=True)
     observacoes = models.CharField(max_length=1000,
                                    null=True,
                                    blank=True,
@@ -342,7 +343,7 @@ class EntidadePublicacao(models.Model):
     entidade = models.ForeignKey(Entidade)
     publicacao = models.ForeignKey(Publicacao)
 
-    pagina = models.CharField(max_length=100)
+    pagina = models.CharField(max_length=100, null=True, blank=True)
     observacoes = models.CharField(max_length=1000,
                                    null=True,
                                    blank=True,
@@ -356,7 +357,7 @@ class EntidadeReferencia(models.Model):
     entidade = models.ForeignKey(Entidade)
     referencia = models.ForeignKey(Referencia)
 
-    pagina = models.CharField(max_length=100)
+    pagina = models.CharField(max_length=100, null=True, blank=True)
     observacoes = models.CharField(max_length=1000,
                                    null=True,
                                    blank=True,
